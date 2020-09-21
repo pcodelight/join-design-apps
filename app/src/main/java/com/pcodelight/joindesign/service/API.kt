@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 class API {
     companion object {
-        private const val BASE_URL = "https://dev3-api.development.tastelabgroup.com/api/v1"
+        private const val BASE_URL = "https://dev3-api.development.tastelabgroup.com/api/v1/"
 
         val instance: Retrofit by lazy {
             val client = OkHttpClient.Builder()

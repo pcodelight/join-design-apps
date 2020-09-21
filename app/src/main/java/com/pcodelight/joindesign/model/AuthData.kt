@@ -1,10 +1,10 @@
-package com.pcodelight.joindesign.response
+package com.pcodelight.joindesign.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class AuthData(
-    @SerializedName("budi")
+    @SerializedName("token_type")
     val tokenType: String,
     @SerializedName("expires_in")
     val expiresIn: Long,

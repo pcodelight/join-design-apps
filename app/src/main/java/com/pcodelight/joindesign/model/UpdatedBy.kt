@@ -1,4 +1,4 @@
-package com.pcodelight.joindesign.response
+package com.pcodelight.joindesign.model
 
 
 import com.google.gson.annotations.SerializedName

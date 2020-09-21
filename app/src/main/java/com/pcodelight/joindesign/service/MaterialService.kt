@@ -1,22 +1,24 @@
 package com.pcodelight.joindesign.service
 
-import com.pcodelight.joindesign.response.ListMaterial
-import com.pcodelight.joindesign.response.RawMaterial
+import com.pcodelight.joindesign.response.ListMaterialResponse
+import com.pcodelight.joindesign.model.RawMaterial
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MaterialService {
-    @GET("/raw-materials")
+    @GET("raw-materials")
     fun getMaterials(
         @Query("storeId")
         storeId: String,
         @Query("page")
-        page: Int
-    ): Call<ListMaterial>
+        page: Int,
+        @Query("keyword")
+        keyword: String
+    ): Call<ListMaterialResponse>
 
-    @GET("/raw-materials/{id}")
+    @GET("raw-materials/{id}")
     fun getMaterialDetail(
         @Path("id")
         id: String
