@@ -19,6 +19,7 @@ class AuthRepository {
             .addFormDataPart("username", username)
             .addFormDataPart("password", password)
             .addFormDataPart("client_id", "7")
+                // todo: save client secret in secure way
             .addFormDataPart("client_secret", "7NDniuscI4542dXzaUiCTN79iIuuMNiQ0wcItmxa")
             .addFormDataPart("grant_type", "password")
             .build()
