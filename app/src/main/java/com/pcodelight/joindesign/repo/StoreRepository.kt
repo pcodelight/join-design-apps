@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class StoreRepository {
-    fun getStoreDetail(authCode: Long, callback: ApiCallback<Store>) {
+    fun getStoreDetail(authCode: String, callback: ApiCallback<Store>) {
         API.instance.create(StoreService::class.java)
             .getStore(authCode = authCode)
             .enqueue(object: Callback<StoreResponse> {

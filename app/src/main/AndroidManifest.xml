@@ -15,7 +15,7 @@
         android:name=".BaseApp"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".screen.MaterialDetailScreen"/>
-        <activity android:name=".screen.DashboardScreen" />
+        <activity android:name=".screen.DashboardScreen" android:theme="@style/AppTheme.ActionBar" android:label="@string/dashboard"/>
         <activity android:name=".screen.StoreSelectionScreen" android:theme="@style/AppTheme.ActionBar"
             android:label="@string/choose_store"/>
         <activity android:name=".screen.LoginScreen" android:theme="@style/AppTheme">

@@ -23,7 +23,7 @@ class StoreSelectionScreen : AppCompatActivity() {
     private var viewModel: StoreSelectionViewModel = StoreSelectionViewModel(StoreRepository())
     private var itemAdapter = ItemAdapter<StoreSelectionItem>()
     private var adapter = FastAdapter.with(itemAdapter)
-    private var selectedStoreId: Int? = null
+    private var selectedStore: Store? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +46,14 @@ class StoreSelectionScreen : AppCompatActivity() {
         rvStore.layoutManager = LinearLayoutManager(this@StoreSelectionScreen, VERTICAL, false)
         rvStore.itemAnimator = null
         rvStore.adapter = adapter
+
+        btnChoose.setOnClickListener {
+            selectedStore?.let {
+                startActivity(Intent(this@StoreSelectionScreen, DashboardScreen::class.java).apply {
+                    putExtra(DashboardScreen.STORE_UUID_KEY, it)
+                })
+            }
+        }
     }
 
     private val errorObserver = Observer<String> {
@@ -71,11 +79,12 @@ class StoreSelectionScreen : AppCompatActivity() {
     private fun renderStoreItems(stores: List<Store>) {
         itemAdapter.set(
             stores.map {
-                StoreSelectionItem(it, it.id == selectedStoreId) { id, _ ->
-                    selectedStoreId = id
+                StoreSelectionItem(it, it.id == selectedStore?.id) {
+                    selectedStore = it
                     rvStore.post {
                         renderStoreItems(stores)
                     }
+                    btnChoose.visibility = View.VISIBLE
                 }.apply {
                     identifier = it.id.toLong()
                 }

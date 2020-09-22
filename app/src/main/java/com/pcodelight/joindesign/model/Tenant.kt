@@ -2,6 +2,7 @@ package com.pcodelight.joindesign.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Tenant(
     @SerializedName("created_at")
@@ -18,4 +19,4 @@ data class Tenant(
     val updatedAt: String,
     @SerializedName("uuid")
     val uuid: String
-)
+): Serializable

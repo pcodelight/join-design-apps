@@ -12,5 +12,5 @@ interface StoreService {
     fun getStores(): Call<ListStoreResponse>
 
     @GET("stores/findByAuthCode")
-    fun getStore(@Query("authCode") authCode: Long): Call<StoreResponse>
+    fun getStore(@Query("authCode") authCode: String): Call<StoreResponse>
 }

@@ -2,6 +2,7 @@ package com.pcodelight.joindesign.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Store(
     @SerializedName("authCode")
@@ -19,11 +20,11 @@ data class Store(
     @SerializedName("order_prefix")
     val orderPrefix: String,
     @SerializedName("previewUrl")
-    val previewUrl: Any?,
+    val previewUrl: String?,
     @SerializedName("tenant")
     val tenant: Tenant,
     @SerializedName("uuid")
     val uuid: String,
     @SerializedName("warehouse")
     val warehouse: Warehouse
-)
+): Serializable

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.ui_store_selection_item.view.*
 class StoreSelectionItem(
     var store: Store,
     var checked: Boolean,
-    var onCheckListener: (Int, Boolean) -> Unit
+    var onCheckListener: () -> Unit
 ) : AbstractItem<StoreSelectionItem.ViewHolder>() {
     class ViewHolder(
         private val view: View
@@ -48,7 +48,7 @@ class StoreSelectionItem(
 
         private fun onItemSelected(item: StoreSelectionItem) {
             if (!item.checked) {
-                item.onCheckListener(item.store.id, true)
+                item.onCheckListener()
             }
         }
 

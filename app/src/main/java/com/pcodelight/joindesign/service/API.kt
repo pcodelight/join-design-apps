@@ -17,9 +17,9 @@ class API {
             val token = AuthHelper.instance.getAuthToken()
 
             val builder = OkHttpClient.Builder()
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .writeTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(100, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
 
             if (token?.isNotBlank() == true) {
                 builder.addInterceptor(object: Interceptor {

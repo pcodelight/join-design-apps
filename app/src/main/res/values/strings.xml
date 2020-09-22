@@ -5,4 +5,8 @@
     <string name="password_hint">password</string>
     <string name="login">Login</string>
     <string name="choose_store">Choose Store</string>
+    <string name="search">Search</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="warehouse_count">%1$d Warehouse</string>
+    <string name="store_count">%1$d Store</string>
 </resources>

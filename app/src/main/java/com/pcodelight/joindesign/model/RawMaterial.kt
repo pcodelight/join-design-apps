@@ -11,7 +11,7 @@ data class RawMaterial(
     @SerializedName("createdAt")
     val createdAt: String,
     @SerializedName("defaultPrice")
-    val defaultPrice: Int,
+    val defaultPrice: Double,
     @SerializedName("id")
     val id: Int,
     @SerializedName("nameChin")

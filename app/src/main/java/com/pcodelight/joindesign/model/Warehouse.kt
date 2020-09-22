@@ -2,6 +2,7 @@ package com.pcodelight.joindesign.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Warehouse(
     @SerializedName("createdAt")
@@ -14,4 +15,4 @@ data class Warehouse(
     val updatedAt: String,
     @SerializedName("uuid")
     val uuid: String
-)
+): Serializable
