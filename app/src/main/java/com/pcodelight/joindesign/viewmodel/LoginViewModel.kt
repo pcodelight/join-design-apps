@@ -11,16 +11,16 @@ import com.pcodelight.joindesign.response.AuthDataResponse
 import com.pcodelight.joindesign.service.ApiCallback
 
 class LoginViewModel(private val repo: AuthRepository) : ViewModel() {
-    private val _errorMsg = MutableLiveData<String>()
-    private val _isLoading = MutableLiveData<Boolean>()
-    private val _authData = MutableLiveData<AuthData?>()
+    private var _errorMsg = MutableLiveData<String>()
+    private var _isLoading = MutableLiveData<Boolean>()
+    private var _authData = MutableLiveData<AuthData?>()
 
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
     val authData: LiveData<AuthData?> = _authData
 
     fun getAuth(username: String, password: String) {
-        _isLoading.value = true
+        _isLoading.postValue(true)
 
         repo.getAuth(username, password, object: ApiCallback<AuthData> {
             override fun onSuccess(data: AuthData?) {

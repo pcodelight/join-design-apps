@@ -11,6 +11,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pcodelight.joindesign.AuthHelper
 import com.pcodelight.joindesign.Conf
 import com.pcodelight.joindesign.R
 import com.pcodelight.joindesign.model.AuthData
@@ -20,15 +21,15 @@ import kotlinx.android.synthetic.main.login_screen_layout.*
 
 @Suppress("UNCHECKED_CAST")
 class LoginScreen : AppCompatActivity() {
-    private var viewModel: LoginViewModel = LoginViewModel(
-        AuthRepository())
-    lateinit var sharedPreferences: SharedPreferences
+    private var viewModel: LoginViewModel = LoginViewModel(AuthRepository())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen_layout)
 
-        sharedPreferences = getSharedPreferences(Conf.SHAREDPREFENCES_NAME, Context.MODE_PRIVATE)
+        if (!AuthHelper.instance.getAuthToken().isNullOrBlank()) {
+            gotoStoreSelectionPage()
+        }
 
         initView()
         initViewModel()
@@ -95,15 +96,13 @@ class LoginScreen : AppCompatActivity() {
 
     private val authDataObserver = Observer<AuthData?> { authData ->
         authData?.let {
-            sharedPreferences.edit().apply {
-                putString("auth_token", it.accessToken)
-                putString("refresh_token", it.refreshToken)
-                putLong("expires", it.expiresIn)
-                apply()
-            }
-
-            startActivity(Intent(this@LoginScreen, StoreSelectionScreen::class.java))
-            finish()
+            AuthHelper.instance.setAuthToken(it)
+            gotoStoreSelectionPage()
         }
+    }
+
+    private fun gotoStoreSelectionPage() {
+        startActivity(Intent(this@LoginScreen, StoreSelectionScreen::class.java))
+        finish()
     }
 }

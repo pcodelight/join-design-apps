@@ -9,5 +9,6 @@
     <color name="darkGrey">#C4C4C4</color>
     <color name="transparentGrey">#AAC4C4C4</color>
     <color name="softBlack">#272727</color>
+    <color name="lightGreen">#3EAE56</color>
     <color name="white">#FFFFFF</color>
 </resources>
