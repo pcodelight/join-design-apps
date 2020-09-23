@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">joindesign</string>
+    <string name="app_name">joinprint</string>
 
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>
