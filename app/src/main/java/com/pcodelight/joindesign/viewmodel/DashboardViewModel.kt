@@ -45,22 +45,22 @@ class DashboardViewModel(
             currentPage,
             object : ApiCallback<List<RawMaterial>> {
                 override fun onSuccess(data: List<RawMaterial>?) {
-                    _isLoadMore.postValue(false)
                     _error.postValue("")
                     _additionalPageResponse.postValue(data)
+                    _isLoadMore.postValue(false)
                 }
 
                 override fun onError(error: String?) {
-                    _isLoadMore.postValue(false)
                     _error.postValue(error)
+                    _isLoadMore.postValue(false)
                 }
             }
         )
     }
 
-    fun getRawMaterials(keyword: String) {
-        this.currentPage = 1
-        this.keyword = keyword
+    fun getRawMaterials(passedKeyword: String?) {
+        currentPage = 1
+        keyword = passedKeyword ?: keyword
 
         _isLoading.postValue(true)
         materialRepo.getMaterials(
@@ -69,14 +69,14 @@ class DashboardViewModel(
             currentPage,
             object : ApiCallback<List<RawMaterial>> {
                 override fun onSuccess(data: List<RawMaterial>?) {
-                    _isLoading.postValue(false)
                     _error.postValue("")
                     _materialResponse.postValue(data)
+                    _isLoading.postValue(false)
                 }
 
                 override fun onError(error: String?) {
-                    _isLoading.postValue(false)
                     _error.postValue(error)
+                    _isLoading.postValue(false)
                 }
             })
     }

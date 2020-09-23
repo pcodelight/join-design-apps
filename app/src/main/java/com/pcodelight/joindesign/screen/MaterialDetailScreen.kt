@@ -90,10 +90,7 @@ class MaterialDetailScreen : AppCompatActivity() {
                     SegmentWithHorizontalChildItem(
                         "Warehouses",
                         it.warehouses.map { warehouse ->
-                            TitleDescriptionItem(
-                                warehouse.name,
-                                ""
-                            )
+                            CapsuleWithIconLabelItem(warehouse.name)
                         }
                     ),
                     SegmentWithHorizontalChildItem(

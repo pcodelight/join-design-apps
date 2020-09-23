@@ -13,6 +13,6 @@ fun String?.fromHtml(): Spanned {
     }
 }
 
-fun String?.replaceDaceIfEmpty(): String {
+fun String?.replaceDashIfEmpty(): String {
     return if (!this.isNullOrBlank()) this else "-"
 }

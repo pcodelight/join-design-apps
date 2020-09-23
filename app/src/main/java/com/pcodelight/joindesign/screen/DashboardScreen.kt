@@ -24,6 +24,7 @@ import com.pcodelight.joindesign.repo.StoreRepository
 import com.pcodelight.joindesign.ui.DividerItem
 import com.pcodelight.joindesign.ui.LoadingItem
 import com.pcodelight.joindesign.ui.MaterialItem
+import com.pcodelight.joindesign.ui.TextItem
 import com.pcodelight.joindesign.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.dashboard_screen_layout.*
 
@@ -58,7 +59,7 @@ class DashboardScreen : AppCompatActivity() {
         intentData?.let {
             viewModel.selectedStore = it
         }
-        viewModel.getRawMaterials("")
+        viewModel.getRawMaterials(null)
 
         initView()
     }
@@ -79,12 +80,15 @@ class DashboardScreen : AppCompatActivity() {
         })
 
         tvSearch.setOnClickListener {
+            materialAdapter.clear()
             viewModel.getRawMaterials(etSearch.text.toString())
         }
 
         tvLogout.setOnClickListener {
             alertDialog.show()
         }
+
+        etSearch.setText(viewModel.keyword)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -139,9 +143,14 @@ class DashboardScreen : AppCompatActivity() {
 
     private val materialResponseObserver = Observer<List<RawMaterial>> { rawMaterials ->
         val items = mutableListOf<AbstractItem<*>>()
-        rawMaterials.forEach {
-            items.add(DividerItem())
-            items.add(MaterialItem(it, onMaterialClicked))
+
+        if (rawMaterials.isEmpty()) {
+            items.add(TextItem("No result found.."))
+        } else {
+            rawMaterials.forEach {
+                items.add(DividerItem())
+                items.add(MaterialItem(it, onMaterialClicked))
+            }
         }
 
         materialAdapter.set(items)

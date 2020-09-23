@@ -16,4 +16,5 @@
     <string name="contact_name">Contact Name</string>
     <string name="address">Address</string>
     <string name="phone">Phone</string>
+    <string name="search_raw_material">Search Raw Material...</string>
 </resources>
