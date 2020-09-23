@@ -35,6 +35,8 @@ class DashboardScreen : AppCompatActivity() {
     private val materialAdapter = ItemAdapter<AbstractItem<*>>()
     private val adapter = FastAdapter.with(listOf(materialAdapter, footerAdapter))
 
+    private lateinit var endlessRecyclerOnScrollListener: EndlessRecyclerOnScrollListener
+
     private val alertDialog by lazy {
         AlertDialog.Builder(this)
             .setTitle("Logout Confirmation")
@@ -67,20 +69,29 @@ class DashboardScreen : AppCompatActivity() {
     private fun initView() {
         tvName.text = viewModel.selectedStore.name
 
-        rvMaterial.layoutManager = LinearLayoutManager(
-            this@DashboardScreen,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        rvMaterial.adapter = adapter
-        rvMaterial.addOnScrollListener(object : EndlessRecyclerOnScrollListener() {
-            override fun onLoadMore(currentPage: Int) {
-                viewModel.getMoreMaterials()
+        rvMaterial.apply {
+            layoutManager = LinearLayoutManager(
+                this@DashboardScreen,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = this@DashboardScreen.adapter
+            endlessRecyclerOnScrollListener = object : EndlessRecyclerOnScrollListener(footerAdapter) {
+                override fun onLoadMore(currentPage: Int) {
+                    if (materialAdapter.adapterItemCount > 0) {
+                        viewModel.getMoreMaterials()
+                    }
+                }
             }
-        })
+
+            endlessRecyclerOnScrollListener.resetPageCount()
+            addOnScrollListener(endlessRecyclerOnScrollListener)
+        }
+
 
         tvSearch.setOnClickListener {
             materialAdapter.clear()
+            endlessRecyclerOnScrollListener.resetPageCount()
             viewModel.getRawMaterials(etSearch.text.toString())
         }
 
@@ -118,7 +129,8 @@ class DashboardScreen : AppCompatActivity() {
 
     private val isLoadMoreObserver = Observer<Boolean> {
         if (it) {
-            footerAdapter.set(listOf(LoadingItem()))
+            footerAdapter.clear()
+            footerAdapter.add(LoadingItem())
         } else {
             footerAdapter.clear()
         }

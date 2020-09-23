@@ -14,6 +14,8 @@ class DashboardViewModel(
     private val materialRepo: MaterialRepository
 ) :
     ViewModel() {
+    private var itemPerPage = 20
+
     private var _materialResponse = MutableLiveData<List<RawMaterial>>()
     private var _additionalPageResponse = MutableLiveData<List<RawMaterial>>()
     private var _isLoading = MutableLiveData<Boolean>()
@@ -32,10 +34,13 @@ class DashboardViewModel(
 
     lateinit var selectedStore: Store
 
-    var currentPage: Int = 1
+    var currentPage: Int = 0
     var keyword: String = ""
+    var hasMoreItems: Boolean = true
 
     fun getMoreMaterials() {
+        if (currentPage == 0 || !hasMoreItems) return
+
         _isLoadMore.postValue(true)
         currentPage += 1
 
@@ -48,6 +53,8 @@ class DashboardViewModel(
                     _error.postValue("")
                     _additionalPageResponse.postValue(data)
                     _isLoadMore.postValue(false)
+
+                    hasMoreItems = data?.size ?: 0 >= itemPerPage
                 }
 
                 override fun onError(error: String?) {
@@ -59,6 +66,7 @@ class DashboardViewModel(
     }
 
     fun getRawMaterials(passedKeyword: String?) {
+        hasMoreItems = true
         currentPage = 1
         keyword = passedKeyword ?: keyword
 
@@ -72,6 +80,8 @@ class DashboardViewModel(
                     _error.postValue("")
                     _materialResponse.postValue(data)
                     _isLoading.postValue(false)
+
+                    hasMoreItems = data?.size ?: 0 >= itemPerPage
                 }
 
                 override fun onError(error: String?) {

@@ -17,4 +17,6 @@
     <string name="address">Address</string>
     <string name="phone">Phone</string>
     <string name="search_raw_material">Search Raw Material...</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 </resources>

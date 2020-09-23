@@ -2,10 +2,12 @@ package com.pcodelight.joindesign.ui
 
 import android.view.View
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.pcodelight.joindesign.R
 import com.pcodelight.joindesign.ext.fromHtml
+import com.pcodelight.joindesign.ext.replaceDashIfEmpty
 import com.pcodelight.joindesign.model.Store
 import kotlinx.android.synthetic.main.ui_store_selection_item.view.*
 
@@ -21,18 +23,15 @@ class StoreSelectionItem(
         override fun bindView(item: StoreSelectionItem, payloads: List<Any>) {
             item.store.let { store ->
                 view.tvTitle.text = store.name
-
-                store.description?.takeIf { it.isNotBlank() }?.let {
-                    view.tvDescription.visibility = View.VISIBLE
-                    view.tvDescription.text = store.description.fromHtml()
-                } ?: view.tvDescription.apply {
-                    visibility = View.GONE
-                }
-
-                view.tvOnline.visibility = if (store.isOnline) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
+                view.tvDescription.text = store.description.replaceDashIfEmpty().fromHtml()
+                view.tvOnline.apply {
+                    if (store.isOnline) {
+                        text = context.getString(R.string.online)
+                        setTextColor(ContextCompat.getColor(context, R.color.lightGreen))
+                    } else {
+                        text = context.getString(R.string.offline)
+                        setTextColor(ContextCompat.getColor(context, R.color.darkGrey))
+                    }
                 }
 
                 view.setOnClickListener {
