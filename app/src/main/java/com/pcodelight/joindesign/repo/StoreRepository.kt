@@ -26,7 +26,7 @@ class StoreRepository {
                     if (response.isSuccessful && response.body() != null) {
                         callback.onSuccess(response.body()?.data)
                     } else {
-                        callback.onError(response.message())
+                        callback.onError("Something wrong, try again later")
                     }
                 }
             })
@@ -47,7 +47,7 @@ class StoreRepository {
                     if (response.isSuccessful && response.body() != null) {
                         callback.onSuccess(response.body()?.data)
                     } else {
-                        callback.onError(response.message())
+                        callback.onError("Something wrong, try again later")
                     }
                 }
             })
