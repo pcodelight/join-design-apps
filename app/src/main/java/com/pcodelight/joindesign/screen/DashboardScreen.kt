@@ -17,6 +17,7 @@ import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 import com.pcodelight.joindesign.AuthHelper
 import com.pcodelight.joindesign.R
+import com.pcodelight.joindesign.hideKeyboard
 import com.pcodelight.joindesign.model.RawMaterial
 import com.pcodelight.joindesign.model.Store
 import com.pcodelight.joindesign.repo.MaterialRepository
@@ -89,17 +90,27 @@ class DashboardScreen : AppCompatActivity() {
         }
 
 
-        tvSearch.setOnClickListener {
-            materialAdapter.clear()
-            endlessRecyclerOnScrollListener.resetPageCount()
-            viewModel.getRawMaterials(etSearch.text.toString())
-        }
+        tvSearch.setOnClickListener { onNewSearch() }
 
         tvLogout.setOnClickListener {
             alertDialog.show()
         }
 
-        etSearch.setText(viewModel.keyword)
+        etSearch.apply {
+            setText(viewModel.keyword)
+            setOnEditorActionListener { _, _, _ ->
+                onNewSearch()
+                false
+            }
+        }
+    }
+
+    private fun onNewSearch() {
+        materialAdapter.clear()
+        endlessRecyclerOnScrollListener.resetPageCount()
+
+        hideKeyboard(this@DashboardScreen)
+        viewModel.getRawMaterials(etSearch.text.toString())
     }
 
     @Suppress("UNCHECKED_CAST")
