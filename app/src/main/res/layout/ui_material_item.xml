@@ -24,6 +24,7 @@
         app:layout_constraintEnd_toStartOf="@+id/tvPriceUnit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:lineSpacingExtra="4dp"
         tools:text="生豬頸肉" />
 
     <TextView

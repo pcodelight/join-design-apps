@@ -1,9 +1,11 @@
 package com.pcodelight.joindesign.screen
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -13,6 +15,7 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
+import com.pcodelight.joindesign.AuthHelper
 import com.pcodelight.joindesign.R
 import com.pcodelight.joindesign.model.RawMaterial
 import com.pcodelight.joindesign.model.Store
@@ -30,6 +33,20 @@ class DashboardScreen : AppCompatActivity() {
     private val footerAdapter = ItemAdapter<AbstractItem<*>>()
     private val materialAdapter = ItemAdapter<AbstractItem<*>>()
     private val adapter = FastAdapter.with(listOf(materialAdapter, footerAdapter))
+
+    private val alertDialog by lazy {
+        AlertDialog.Builder(this)
+            .setTitle("Logout Confirmation")
+            .setMessage("Are you sure want to logout ?")
+            .setPositiveButton("Yes") { _, _ ->
+                AuthHelper.instance.removeAuthToken()
+                setResult(StoreSelectionScreen.LOGOUT_RESULT_CODE)
+                this@DashboardScreen.finish()
+            }
+            .setNegativeButton("No") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +72,7 @@ class DashboardScreen : AppCompatActivity() {
             false
         )
         rvMaterial.adapter = adapter
-        rvMaterial.addOnScrollListener(object: EndlessRecyclerOnScrollListener() {
+        rvMaterial.addOnScrollListener(object : EndlessRecyclerOnScrollListener() {
             override fun onLoadMore(currentPage: Int) {
                 viewModel.getMoreMaterials()
             }
@@ -63,6 +80,10 @@ class DashboardScreen : AppCompatActivity() {
 
         tvSearch.setOnClickListener {
             viewModel.getRawMaterials(etSearch.text.toString())
+        }
+
+        tvLogout.setOnClickListener {
+            alertDialog.show()
         }
     }
 
@@ -93,9 +114,7 @@ class DashboardScreen : AppCompatActivity() {
 
     private val isLoadMoreObserver = Observer<Boolean> {
         if (it) {
-            footerAdapter.set(listOf(
-                LoadingItem()
-            ))
+            footerAdapter.set(listOf(LoadingItem()))
         } else {
             footerAdapter.clear()
         }
@@ -122,7 +141,7 @@ class DashboardScreen : AppCompatActivity() {
         val items = mutableListOf<AbstractItem<*>>()
         rawMaterials.forEach {
             items.add(DividerItem())
-            items.add(MaterialItem(it))
+            items.add(MaterialItem(it, onMaterialClicked))
         }
 
         materialAdapter.set(items)
@@ -131,8 +150,17 @@ class DashboardScreen : AppCompatActivity() {
     private val additionalPageResponseObserver = Observer<List<RawMaterial>> { rawMaterials ->
         rawMaterials.forEach {
             materialAdapter.add(DividerItem())
-            materialAdapter.add(MaterialItem(it))
+            materialAdapter.add(MaterialItem(it, onMaterialClicked))
         }
+    }
+
+    private val onMaterialClicked: (String) -> Unit = {
+        startActivity(Intent(
+            this@DashboardScreen,
+            MaterialDetailScreen::class.java
+        ).apply {
+            putExtra(MaterialDetailScreen.MATERIAL_ID_KEY, it)
+        })
     }
 
     companion object {

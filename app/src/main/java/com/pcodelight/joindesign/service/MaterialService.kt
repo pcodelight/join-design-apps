@@ -2,6 +2,7 @@ package com.pcodelight.joindesign.service
 
 import com.pcodelight.joindesign.response.ListMaterialResponse
 import com.pcodelight.joindesign.model.RawMaterial
+import com.pcodelight.joindesign.response.MaterialResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,5 +23,5 @@ interface MaterialService {
     fun getMaterialDetail(
         @Path("id")
         id: String
-    ): Call<RawMaterial>
+    ): Call<MaterialResponse>
 }

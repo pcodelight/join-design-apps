@@ -10,4 +10,10 @@
     <string name="warehouse_count">%1$d Warehouse</string>
     <string name="store_count">%1$d Store</string>
     <string name="no_description_available">No Description Available</string>
+    <string name="material_detail">Material Detail</string>
+    <string name="logout">Logout</string>
+    <string name="name">Name</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
 </resources>

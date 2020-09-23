@@ -7,7 +7,11 @@ import com.pcodelight.joindesign.R
 import com.pcodelight.joindesign.model.RawMaterial
 import kotlinx.android.synthetic.main.ui_material_item.view.*
 
-class MaterialItem(private val materialData: RawMaterial): AbstractItem<MaterialItem.ViewHolder>() {
+class MaterialItem(
+    private val materialData: RawMaterial,
+    private val onClickListener: (String) -> Unit
+): AbstractItem<MaterialItem.ViewHolder>() {
+
     override val layoutRes: Int
         get() = R.layout.ui_material_item
     override val type: Int
@@ -27,6 +31,10 @@ class MaterialItem(private val materialData: RawMaterial): AbstractItem<Material
             builder.append(item.materialData.unit)
 
             view.tvPriceUnit.text = builder
+
+            view.setOnClickListener {
+                item.onClickListener(item.materialData.uuid)
+            }
         }
 
         override fun unbindView(item: MaterialItem) {}

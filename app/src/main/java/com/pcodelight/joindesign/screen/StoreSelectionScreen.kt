@@ -49,9 +49,9 @@ class StoreSelectionScreen : AppCompatActivity() {
 
         btnChoose.setOnClickListener {
             selectedStore?.let {
-                startActivity(Intent(this@StoreSelectionScreen, DashboardScreen::class.java).apply {
+                startActivityForResult(Intent(this@StoreSelectionScreen, DashboardScreen::class.java).apply {
                     putExtra(DashboardScreen.STORE_UUID_KEY, it)
-                })
+                }, ACTIVITY_FROM_STORE_SELECTION)
             }
         }
     }
@@ -110,5 +110,19 @@ class StoreSelectionScreen : AppCompatActivity() {
                     isLoading.observe(this@StoreSelectionScreen, loadingObserver)
                     listStore.observe(this@StoreSelectionScreen, storesObserver)
                 }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ACTIVITY_FROM_STORE_SELECTION && resultCode == LOGOUT_RESULT_CODE) {
+            startActivity(Intent(this, LoginScreen::class.java))
+            this@StoreSelectionScreen.finish()
+        }
+    }
+
+    companion object {
+        const val ACTIVITY_FROM_STORE_SELECTION = 1
+        const val LOGOUT_RESULT_CODE = 2
     }
 }

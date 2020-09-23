@@ -17,12 +17,23 @@ class AuthHelper(context: Context) {
         return token
     }
 
+    fun removeAuthToken() {
+        sharedPreferences?.edit()?.apply {
+            remove(Conf.ACCESS_TOKEN_KEY)
+            remove(Conf.REFRESH_TOKEN_KEY)
+            remove(Conf.EXPIRES_IN_KEY)
+            apply()
+        }
+
+        token = ""
+    }
+
     fun setAuthToken(authData: AuthData) {
         authData.let {
             sharedPreferences?.edit()?.apply {
                 putString(Conf.ACCESS_TOKEN_KEY, it.accessToken)
-                putString("refresh_token", it.refreshToken)
-                putLong("expires", it.expiresIn)
+                putString(Conf.REFRESH_TOKEN_KEY, it.refreshToken)
+                putLong(Conf.EXPIRES_IN_KEY, it.expiresIn)
                 apply()
             }
         }
