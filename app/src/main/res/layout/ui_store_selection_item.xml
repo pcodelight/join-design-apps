@@ -4,57 +4,64 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     android:background="@color/white"
-    android:padding="16dp">
+    android:paddingEnd="16dp"
+    android:paddingStart="0dp">
 
-    <RadioButton
+    <View
         android:id="@+id/rbCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        android:background="@color/softBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
-        android:layout_height="15dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:textColor="@color/softBlack"
         android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tvDescription"
         app:layout_constraintStart_toEndOf="@+id/rbCheck"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginBottom="0dp"
+        app:layout_goneMarginBottom="16dp"
         tool:text="Sample Title" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:ellipsize="end"
-        android:maxLines="3"
+        android:maxLines="1"
         android:textColor="@color/softBlack"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvTitle"
+        android:text="@string/no_description_available"
         tool:text="Sample Description" />
 
     <TextView
         android:id="@+id/tvOnline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:textColor="@color/softBlack"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="12sp"
         tool:text="Online" />
 
 

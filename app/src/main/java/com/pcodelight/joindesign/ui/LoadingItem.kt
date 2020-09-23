@@ -12,12 +12,7 @@ class LoadingItem: AbstractItem<LoadingItem.ViewHolder>() {
     override fun getViewHolder(v: View) = ViewHolder(v)
 
     class ViewHolder(v: View): FastAdapter.ViewHolder<LoadingItem>(v) {
-        override fun bindView(item: LoadingItem, payloads: List<Any>) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun unbindView(item: LoadingItem) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        override fun bindView(item: LoadingItem, payloads: List<Any>) {}
+        override fun unbindView(item: LoadingItem) {}
     }
 }

@@ -35,20 +35,9 @@ class DashboardViewModel(
     var currentPage: Int = 1
     var keyword: String = ""
 
-    fun getRawMaterials(keyword: String) {
-        if (this.keyword != keyword) {
-            currentPage = 1
-        }
-        this.keyword = keyword
-
-        val isSearchReset = currentPage == 1
-        if (isSearchReset) {
-            _isLoading.postValue(true)
-            _isLoadMore.postValue(false)
-        } else {
-            _isLoading.postValue(false)
-            _isLoadMore.postValue(true)
-        }
+    fun getMoreMaterials() {
+        _isLoadMore.postValue(true)
+        currentPage += 1
 
         materialRepo.getMaterials(
             selectedStore.uuid,
@@ -56,22 +45,37 @@ class DashboardViewModel(
             currentPage,
             object : ApiCallback<List<RawMaterial>> {
                 override fun onSuccess(data: List<RawMaterial>?) {
-                    if (isSearchReset) {
-                        _isLoading.postValue(false)
-                        _isLoadMore.postValue(false)
-                        _error.postValue("")
-                        _materialResponse.postValue(data)
-                    } else {
-                        _isLoading.postValue(false)
-                        _isLoadMore.postValue(false)
-                        _error.postValue("")
-                        _additionalPageResponse.postValue(data)
-                    }
+                    _isLoadMore.postValue(false)
+                    _error.postValue("")
+                    _additionalPageResponse.postValue(data)
+                }
+
+                override fun onError(error: String?) {
+                    _isLoadMore.postValue(false)
+                    _error.postValue(error)
+                }
+            }
+        )
+    }
+
+    fun getRawMaterials(keyword: String) {
+        this.currentPage = 1
+        this.keyword = keyword
+
+        _isLoading.postValue(true)
+        materialRepo.getMaterials(
+            selectedStore.uuid,
+            keyword,
+            currentPage,
+            object : ApiCallback<List<RawMaterial>> {
+                override fun onSuccess(data: List<RawMaterial>?) {
+                    _isLoading.postValue(false)
+                    _error.postValue("")
+                    _materialResponse.postValue(data)
                 }
 
                 override fun onError(error: String?) {
                     _isLoading.postValue(false)
-                    _isLoadMore.postValue(false)
                     _error.postValue(error)
                 }
             })

@@ -76,17 +76,21 @@ class StoreSelectionScreen : AppCompatActivity() {
         renderStoreItems(stores)
     }
 
+    private fun onItemSelected(store: Store) {
+        rvStore.post {
+            selectedStore = store
+            viewModel.listStore.value?.let {
+                renderStoreItems(it)
+            }
+            btnChoose.visibility = View.VISIBLE
+        }
+    }
+
     private fun renderStoreItems(stores: List<Store>) {
         itemAdapter.set(
             stores.map {
                 StoreSelectionItem(it, it.id == selectedStore?.id) {
-                    selectedStore = it
-                    rvStore.post {
-                        renderStoreItems(stores)
-                    }
-                    btnChoose.visibility = View.VISIBLE
-                }.apply {
-                    identifier = it.id.toLong()
+                    onItemSelected(it)
                 }
             }
         )

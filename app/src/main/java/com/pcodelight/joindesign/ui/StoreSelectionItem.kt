@@ -35,14 +35,11 @@ class StoreSelectionItem(
                     View.GONE
                 }
 
-                view.rbCheck.isChecked = item.checked
-                view.rbCheck.setOnCheckedChangeListener { _, _ ->
-                    onItemSelected(item)
-                }
-
                 view.setOnClickListener {
                     onItemSelected(item)
                 }
+
+                view.rbCheck.visibility = if (item.checked) View.VISIBLE else View.GONE
             }
         }
 

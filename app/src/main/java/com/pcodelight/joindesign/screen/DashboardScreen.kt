@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
+import com.mikepenz.fastadapter.scroll.EndlessRecyclerOnScrollListener
 import com.pcodelight.joindesign.R
 import com.pcodelight.joindesign.model.RawMaterial
 import com.pcodelight.joindesign.model.Store
@@ -54,6 +55,15 @@ class DashboardScreen : AppCompatActivity() {
             false
         )
         rvMaterial.adapter = adapter
+        rvMaterial.addOnScrollListener(object: EndlessRecyclerOnScrollListener() {
+            override fun onLoadMore(currentPage: Int) {
+                viewModel.getMoreMaterials()
+            }
+        })
+
+        tvSearch.setOnClickListener {
+            viewModel.getRawMaterials(etSearch.text.toString())
+        }
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -9,4 +9,5 @@
     <string name="dashboard">Dashboard</string>
     <string name="warehouse_count">%1$d Warehouse</string>
     <string name="store_count">%1$d Store</string>
+    <string name="no_description_available">No Description Available</string>
 </resources>
