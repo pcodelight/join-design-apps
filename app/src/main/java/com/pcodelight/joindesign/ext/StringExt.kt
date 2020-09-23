@@ -12,3 +12,7 @@ fun String?.fromHtml(): Spanned {
         Html.fromHtml(text)
     }
 }
+
+fun String?.replaceDaceIfEmpty(): String {
+    return if (!this.isNullOrBlank()) this else "-"
+}

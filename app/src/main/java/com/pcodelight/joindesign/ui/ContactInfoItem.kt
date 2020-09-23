@@ -4,6 +4,7 @@ import android.view.View
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.pcodelight.joindesign.R
+import com.pcodelight.joindesign.ext.replaceDaceIfEmpty
 import com.pcodelight.joindesign.model.Supplier
 import kotlinx.android.synthetic.main.ui_contact_info.view.*
 
@@ -18,15 +19,13 @@ class ContactInfoItem(val supplier: Supplier): AbstractItem<ContactInfoItem.View
     class ViewHolder(val view: View): FastAdapter.ViewHolder<ContactInfoItem>(view) {
         override fun bindView(item: ContactInfoItem, payloads: List<Any>) {
             view.apply {
-                tvFullName.text = item.supplier.name
-                tvAddress.text = item.supplier.address
-                tvContactName.text = item.supplier.contactName
-                tvPhone.text = item.supplier.tel
+                tvFullName.text = item.supplier.name.replaceDaceIfEmpty()
+                tvAddress.text = item.supplier.address.replaceDaceIfEmpty()
+                tvContactName.text = item.supplier.contactName.replaceDaceIfEmpty()
+                tvPhone.text = item.supplier.tel.replaceDaceIfEmpty()
             }
         }
 
-        override fun unbindView(item: ContactInfoItem) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
+        override fun unbindView(item: ContactInfoItem) {}
     }
 }
